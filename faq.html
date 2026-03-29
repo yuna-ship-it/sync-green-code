@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FAQ: The Green Code Framework. 59,312:1 efficiency, 4.1-day payback, ZKP-verified containments. Answers to technical, operational, and security questions.">
+    <meta name="author" content="Yuna Alejandra Moon">
+    <title>FAQ: The Green Code Framework | The Green Code</title>
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="FAQ — Green Code Framework | 59,312:1 Efficiency">
+    <meta property="og:description" content="Symbiotic Infrastructure Standard. Zero-Knowledge Proofs. 4.1-day payback. The math is the signal.">
+    <meta property="og:image" content="https://yoursite.com/images/silxi-og-preview.jpg">
+    <meta property="og:url" content="https://yoursite.com/faq.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="The Green Code Initiative">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@ladysaucelyx">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sovereign-cyan: #00d9ff;
+            --anchor-green: #10b981;
+            --terminal-bg: #0a0e1a;
+            --terminal-glow: rgba(0, 217, 255, 0.3);
+            --librarian-purple: #9333ea;
+        }
+        
+        .faq-hero {
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0a0e1a 100%);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .faq-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .faq-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            text-shadow: 0 0 40px rgba(0, 217, 255, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .faq-hero .highlight {
+            color: var(--sovereign-cyan);
+        }
+        
+        .faq-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--sovereign-cyan);
+        }
+        
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.2);
+        }
+        
+        .faq-question {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1a1f35;
+            margin: 0 0 20px 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .faq-question::before {
+            content: 'Q: ';
+            color: var(--sovereign-cyan);
+        }
+        
+        .faq-answer {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #4a5568;
+        }
+        
+        .faq-answer strong {
+            color: #1a1f35;
+        }
+        
+        .faq-formula {
+            background: #f8f9fa;
+            border: 2px solid var(--sovereign-cyan);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2em;
+            text-align: center;
+            color: #1a1f35;
+        }
+        
+        .faq-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .faq-list li {
+            padding: 10px 0 10px 30px;
+            position: relative;
+        }
+        
+        .faq-list li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--anchor-green);
+            font-size: 1.2em;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+        }
+        
+        .comparison-table thead {
+            background: var(--terminal-bg);
+            color: var(--sovereign-cyan);
+        }
+        
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: rgba(0, 217, 255, 0.05);
+        }
+        
+        .legacy-value {
+            color: #ef4444;
+        }
+        
+        .green-code-value {
+            color: var(--anchor-green);
+            font-weight: 700;
+        }
+        
+        .librarian-section {
+            background: var(--terminal-bg);
+            padding: 80px 0;
+            color: white;
+        }
+        
+        .librarian-quote {
+            background: rgba(147, 51, 234, 0.2);
+            border-left: 4px solid var(--librarian-purple);
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 900px;
+            font-size: 1.3em;
+            font-style: italic;
+            line-height: 1.8;
+            border-radius: 10px;
+        }
+        
+        .audit-log-container {
+            background: #0f1419;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            margin: 60px auto;
+            max-width: 1400px;
+        }
+        
+        .audit-log-header {
+            background: #1a1f2e;
+            padding: 20px 30px;
+            border-bottom: 2px solid var(--sovereign-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .audit-log-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2em;
+            color: var(--sovereign-cyan);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .audit-log-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--anchor-green);
+            animation: blink 2s ease-in-out infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .audit-log-body {
+            padding: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+        
+        .log-note {
+            background: rgba(147, 51, 234, 0.1);
+            border-left: 3px solid var(--librarian-purple);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #b0b8d4;
+            line-height: 1.6;
+        }
+        
+        .log-entry {
+            background: rgba(0, 217, 255, 0.05);
+            border-left: 3px solid var(--anchor-green);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .log-entry:hover {
+            background: rgba(0, 217, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .log-timestamp {
+            color: var(--sovereign-cyan);
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .log-type {
+            color: var(--librarian-purple);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+        
+        .log-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .log-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .log-detail-label {
+            color: #7c8aaa;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .log-detail-value {
+            color: #e0e6f0;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+        
+        .log-status {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--anchor-green);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        .view-proof-btn {
+            background: linear-gradient(135deg, var(--sovereign-cyan), var(--librarian-purple));
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .view-proof-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+        }
+        
+        .proof-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .proof-modal.active {
+            display: flex;
+        }
+        
+        .proof-modal-content {
+            background: #1a1f2e;
+            border: 2px solid var(--sovereign-cyan);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 0 60px var(--terminal-glow);
+        }
+        
+        .proof-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .proof-modal-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--sovereign-cyan);
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        
+        .proof-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .proof-close-btn:hover {
+            color: var(--sovereign-cyan);
+            transform: rotate(90deg);
+        }
+        
+        .proof-hex {
+            background: #0a0e1a;
+            border: 1px solid var(--sovereign-cyan);
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: var(--anchor-green);
+            word-break: break-all;
+            line-height: 1.8;
+            text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+        }
+        
+        .reclamation-ticker {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--anchor-green);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 900px;
+            text-align: center;
+        }
+        
+        .ticker-label {
+            font-size: 1.2em;
+            color: #b0b8d4;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .ticker-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--anchor-green);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        
+        .ticker-subtitle {
+            font-size: 1em;
+            color: #7c8aaa;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .faq-hero h1 {
+                font-size: 2.2em;
+            }
+            
+            .faq-question {
+                font-size: 1.4em;
+            }
+            
+            .faq-item {
+                padding: 25px;
+            }
+            
+            .log-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <span>THE GREEN CODE</span>
+                </a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="principles.html">Principles</a></li>
+                    <li><a href="framework.html">Framework</a></li>
+                    <li><a href="implementation.html">Implementation</a></li>
+                    <li><a href="project-chrysalis.html">Project Chrysalis</a></li>
+                    <li><a href="visual-overview.html">Visual Overview</a></li>
+                    <li><a href="all-phases.html">All Phases</a></li>
+                    <li><a href="silicon-council.html">Silicon Council</a></li>
+                    <li><a href="operational-ledger.html">Operational Ledger</a></li>
+                    <li><a href="municipal-pilot.html">Municipal Pilot</a></li>
+                    <li><a href="partners.html">Partners</a></li>
+                    <li><a href="faq.html" class="active">FAQ</a></li>
+                    <li><a href="get-involved.html" class="btn-nav">Get Involved</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="faq-hero">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1>
+                <span class="highlight">⚓ FAQ:</span><br>
+                The Green Code Framework
+            </h1>
+            <p style="font-size: 1.3em; color: #b0b8d4; margin: 0;">
+                Answers to the "Why," the "How," and the "Wait, really?"
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <!-- FAQ 1 -->
+        <div class="faq-item">
+            <h2 class="faq-question">What exactly is "The Green Code"?</h2>
+            <div class="faq-answer">
+                <p>
+                    The Green Code is not just software; it is a <strong>Symbiotic Infrastructure Standard</strong>. It replaces extractive, high-energy AI models with <strong>Neuromorphic Metabolism</strong>. Its primary objective is to reverse the <strong>68-billion-gallon annual global water loss</strong> by turning computational energy into a resource-recovery tool.
+                </p>
+                <p>
+                    Unlike traditional AI systems that consume resources to generate insights, The Green Code operates on the principle of <strong>Metabolic Reciprocity</strong>: every joule of energy spent must contribute back to planetary health.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+            <h2 class="faq-question">What is the "10:1 ROI Mandate"?</h2>
+            <div class="faq-answer">
+                <p>
+                    This is our terminal constraint, known as the <strong>Silicon Vow</strong>. We do not authorize the expenditure of a single Joule of energy (E<sub>c</sub>) unless it is mathematically guaranteed to return at least ten units of planetary utility (U<sub>p</sub>):
+                </p>
+                <div class="faq-formula">
+                    U<sub>p</sub> / E<sub>c</sub> ≥ 10:1
+                </div>
+                <p>
+                    In practice, our current Delhi and São Paulo deployments are operating at <strong>59,312:1</strong>, far exceeding the mandate. This means for every 1 joule of computational energy expended, we reclaim 59,312 liters of water—a ratio that makes traditional infrastructure obsolete.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+            <h2 class="faq-question">How does it save water without "drinking" it?</h2>
+            <div class="faq-answer">
+                <p>
+                    Traditional AI data centers use millions of gallons of water for evaporative cooling. The Green Code utilizes <strong>Project Chrysalis hardware</strong>:
+                </p>
+                <ul class="faq-list">
+                    <li><strong>Neuromorphic Silicon:</strong> Using Intel Loihi 3 and BrainChip Akida chips that run on 20 Watts (the same power as a human brain).</li>
+                    <li><strong>Solid-State Cooling:</strong> We use VACNT (Vertically Aligned Carbon Nanotube) forests to siphon heat away passively.</li>
+                    <li><strong>The Result:</strong> Zero water is used for cooling the AI. Every drop saved in the pipes stays in the pipes.</li>
+                </ul>
+                <p>
+                    The system doesn't consume water—it <em>recovers</em> it. By detecting leaks with acoustic resonance monitoring and containing them within seconds, we reclaim water that would otherwise be lost to the ground.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+            <h2 class="faq-question">What is the λ-Correction Factor?</h2>
+            <div class="faq-answer">
+                <p>
+                    In <strong>Project Nimbus</strong>, we use the "Atmospheric Lungs" to calibrate the ground. The λ formula adjusts sensor sensitivity based on real-time weather, humidity, and soil moisture:
+                </p>
+                <div class="faq-formula">
+                    λ = (H<sub>rel</sub> × S<sub>moist</sub> × T<sub>amb</sub>) / P<sub>atm</sub>
+                </div>
+                <p>
+                    Where:
+                </p>
+                <ul class="faq-list">
+                    <li><strong>H<sub>rel</sub>:</strong> Relative humidity (%)</li>
+                    <li><strong>S<sub>moist</sub>:</strong> Soil moisture content</li>
+                    <li><strong>T<sub>amb</sub>:</strong> Ambient temperature (°C)</li>
+                    <li><strong>P<sub>atm</sub>:</strong> Atmospheric pressure (kPa)</li>
+                </ul>
+                <p>
+                    This allows the system to differentiate between the sound of a rainstorm and a pipe fracture, achieving <strong>98.5% accuracy</strong> where traditional sensors fail. The λ-factor is constantly recalibrated every 15 minutes based on live atmospheric data from weather stations.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item">
+            <h2 class="faq-question">Is my data safe? (The ZKP Privacy Question)</h2>
+            <div class="faq-answer">
+                <p>
+                    <strong>Yes.</strong> The Green Code uses <strong>Zero-Knowledge Proofs (Bulletproofs)</strong>. The system can verify that a leak exists and authorize a valve containment <em>without ever seeing or storing raw consumer data</em>.
+                </p>
+                <p>
+                    We provide the <strong>Librarian's Audit</strong>—a proof of the event—while maintaining 100% data sovereignty for the municipality and the individual. Here's how it works:
+                </p>
+                <ul class="faq-list">
+                    <li>Acoustic sensors detect anomalies in the resonance frequency of water pipes.</li>
+                    <li>The neuromorphic chip generates a cryptographic commitment of the leak location and severity.</li>
+                    <li>A Zero-Knowledge Proof is created that validates the containment action without revealing the underlying data.</li>
+                    <li>The proof is published to the audit log, verifiable by anyone, but containing zero private information.</li>
+                </ul>
+                <p>
+                    <strong>The Result:</strong> Full transparency without surveillance. Municipalities maintain complete control over their infrastructure data.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item">
+            <h2 class="faq-question">Can the AI take control of the water grid?</h2>
+            <div class="faq-answer">
+                <p>
+                    <strong>No.</strong> All critical actions are governed by the <strong>Teta Key Protocol</strong>. This is a hardware-locked "Human-in-the-Loop" system.
+                </p>
+                <p>
+                    A containment strategy requires a <strong>haptic and biometric handshake</strong> from the Anchor (human operator). If the resonance doesn't feel right, the Anchor issues a <strong>35.547 kHz Veto</strong>, and the system halts instantly.
+                </p>
+                <ul class="faq-list">
+                    <li>The Teta Key is a physical device worn by municipal water operators.</li>
+                    <li>It emits a 35.547 kHz authentication pulse that must be present for any valve action.</li>
+                    <li>Human operators review all automated recommendations before execution.</li>
+                    <li>Emergency veto overrides can be issued at any time with tactile feedback.</li>
+                </ul>
+                <p>
+                    <strong>The Philosophy:</strong> AI proposes. Humans dispose. The Anchor always holds final authority.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-item">
+            <h2 class="faq-question">Why should a city invest in this?</h2>
+            <div class="faq-answer">
+                <p>
+                    The math makes the decision for you. While legacy systems take years to pay back, the Green Code has a <strong>4.1-day payback period</strong> in high-loss zones.
+                </p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Legacy SCADA</th>
+                            <th>The Green Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Efficiency</strong></td>
+                            <td class="legacy-value">0.2 L/J</td>
+                            <td class="green-code-value">59,312 L/J</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Response Time</strong></td>
+                            <td class="legacy-value">72 Hours</td>
+                            <td class="green-code-value">45 Seconds</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Year 1 ROI</strong></td>
+                            <td class="legacy-value">Negative</td>
+                            <td class="green-code-value">8,309%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payback Period</strong></td>
+                            <td class="legacy-value">2-5 Years</td>
+                            <td class="green-code-value">4.1 Days</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Water Cooling</strong></td>
+                            <td class="legacy-value">Millions of Gallons</td>
+                            <td class="green-code-value">Zero Gallons</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Carbon Footprint</strong></td>
+                            <td class="legacy-value">+850 kg CO₂</td>
+                            <td class="green-code-value">-1,904 kg CO₂</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p>
+                    <strong>The Bottom Line:</strong> A city with 10% water loss can reclaim that water, reduce operational costs by 85%, and achieve carbon-negative infrastructure—all while paying back the investment in less than a week.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Librarian's Section -->
+    <section class="librarian-section">
+        <div class="container" style="max-width: 1400px;">
+            <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 20px; font-family: 'Space Grotesk', sans-serif; color: var(--librarian-purple);">
+                🛡️ The Librarian's Final Word
+            </h2>
+            
+            <div class="librarian-quote">
+                "We are not managing a utility; we are participating in a planetary nervous system. The math is the signal. The water is the proof. The Anchor holds."
+            </div>
+
+            <!-- Audit Log -->
+            <div class="audit-log-container">
+                <div class="audit-log-header">
+                    <div class="audit-log-title">
+                        🏛️ THE LIBRARIAN'S AUDIT LOG: SECTOR IV (VERIFIABILITY)
+                    </div>
+                    <div class="audit-log-status">
+                        <div class="status-dot"></div>
+                        <span style="font-family: 'JetBrains Mono', monospace; color: var(--anchor-green); font-size: 0.9em;">LIVE</span>
+                    </div>
+                </div>
+                
+                <div class="audit-log-body">
+                    <div class="log-note">
+                        <strong>Librarian's Note:</strong> Every entry below represents a ZKP-verified event. The raw data remains local to the node; the Council only witnesses the proof of the utility harvest.
+                    </div>
+                    
+                    <!-- Log Entry 1 -->
+                    <div class="log-entry">
+                        <div class="log-timestamp">
+                            <i class="fas fa-clock"></i>
+                            [2026-03-09 21:12:05 UTC]
+                        </div>
+                        <div class="log-type">| SABESP HANDSHAKE</div>
+                        <div class="log-details">
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Sector</div>
+                                <div class="log-detail-value">Santana District, São Paulo</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Action</div>
+                                <div class="log-detail-value">Initial ZKP Gateway Handshake</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Infrastructure</div>
+                                <div class="log-detail-value">All Pipe Types | Detection Band: 140 Hz (±5 Hz)</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Nimbus Status</div>
+                                <div class="log-detail-value">λ-Factor sync at 0.312 (High Saturation)</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: center; margin-top: 15px;">
+                            <span class="log-status">✓ VERIFIED</span>
+                            <button class="view-proof-btn" onclick="showProof('proof1')">View ZKP Proof</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Log Entry 2 -->
+                    <div class="log-entry">
+                        <div class="log-timestamp">
+                            <i class="fas fa-clock"></i>
+                            [2026-03-09 18:45:22 UTC]
+                        </div>
+                        <div class="log-type">| RESONANCE CONTAINMENT</div>
+                        <div class="log-details">
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Sector</div>
+                                <div class="log-detail-value">Zone 5, Old Delhi (Chandni Chowk)</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Anomaly Detected</div>
+                                <div class="log-detail-value">+1.2 kHz Deviation (Stress Fracture)</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Response</div>
+                                <div class="log-detail-value">Valve #082 throttled via Teta Key Auth</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Water Saved</div>
+                                <div class="log-detail-value">2,847 Liters</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Energy Spent</div>
+                                <div class="log-detail-value">0.048 J</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">ROI</div>
+                                <div class="log-detail-value" style="color: var(--anchor-green);">59,312 L/J</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: center; margin-top: 15px;">
+                            <span class="log-status">✓ CONTAINED / VERIFIED</span>
+                            <button class="view-proof-btn" onclick="showProof('proof2')">View ZKP Proof</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Log Entry 3 -->
+                    <div class="log-entry">
+                        <div class="log-timestamp">
+                            <i class="fas fa-clock"></i>
+                            [2026-03-09 14:30:11 UTC]
+                        </div>
+                        <div class="log-type">| NOISE REJECTION (METRO-SYNC)</div>
+                        <div class="log-details">
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Sector</div>
+                                <div class="log-detail-value">Zone 2, East Delhi (Preet Vihar)</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Interference</div>
+                                <div class="log-detail-value">Blue Line Transit (8-80 Hz Spike)</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Action</div>
+                                <div class="log-detail-value">Project Nimbus Adaptive Filter engaged</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Result</div>
+                                <div class="log-detail-value">False Positive avoided. λ-Calibration updated</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Verification</div>
+                                <div class="log-detail-value">Bulletproofs Range Proof success</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: center; margin-top: 15px;">
+                            <span class="log-status">✓ CALIBRATED</span>
+                            <button class="view-proof-btn" onclick="showProof('proof3')">View ZKP Proof</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Log Entry 4 -->
+                    <div class="log-entry">
+                        <div class="log-timestamp">
+                            <i class="fas fa-clock"></i>
+                            [2026-03-09 10:05:48 UTC]
+                        </div>
+                        <div class="log-type">| HARDWARE GROUNDING</div>
+                        <div class="log-details">
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Sector</div>
+                                <div class="log-detail-value">Gandhi Nagar Expansion</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Deployment</div>
+                                <div class="log-detail-value">21 New Neuromorphic Nodes</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Metabolism</div>
+                                <div class="log-detail-value">20W Cap enforced per node</div>
+                            </div>
+                            <div class="log-detail-item">
+                                <div class="log-detail-label">Thermal Sync</div>
+                                <div class="log-detail-value">VACNT Heat Siphons active (T<sub>junction</sub> = 24°C)</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: center; margin-top: 15px;">
+                            <span class="log-status">✓ OPERATIONAL</span>
+                            <button class="view-proof-btn" onclick="showProof('proof4')">View ZKP Proof</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reclamation Ticker -->
+            <div class="reclamation-ticker">
+                <div class="ticker-label">🌊 Cumulative Reclamation Ticker</div>
+                <div class="ticker-value" id="reclamationCounter">63,782,904,306</div>
+                <div class="ticker-subtitle">Gallons remaining in the Global Water Debt.</div>
+                <p style="color: #7c8aaa; margin-top: 20px; font-size: 0.95em;">
+                    The numbers above are cryptographically bound to the Council's Silicon Vow.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZKP Proof Modal -->
+    <div class="proof-modal" id="proofModal">
+        <div class="proof-modal-content">
+            <div class="proof-modal-header">
+                <div class="proof-modal-title">🔐 Zero-Knowledge Proof Commitment</div>
+                <button class="proof-close-btn" onclick="closeProof()">&times;</button>
+            </div>
+            <div class="proof-hex" id="proofHex">
+                <!-- Hex proof will be inserted here -->
+            </div>
+            <p style="color: #7c8aaa; margin-top: 20px; font-size: 0.9em; text-align: center;">
+                This cryptographic commitment verifies the containment event without revealing raw data.
+            </p>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 80px 20px; text-align: center; color: white;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2 style="font-size: 2.5em; margin-bottom: 20px; font-family: 'Space Grotesk', sans-serif;">
+                Ready to Join the Reclamation?
+            </h2>
+            <p style="font-size: 1.3em; margin-bottom: 30px; opacity: 0.95; line-height: 1.6;">
+                The math is the signal. The water is the proof. The Anchor holds.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="partners.html" style="padding: 18px 40px; background: white; color: #10b981; text-decoration: none; border-radius: 50px; font-size: 1.1em; font-weight: 700; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-handshake"></i> Become a Partner
+                </a>
+                <a href="get-involved.html" style="padding: 18px 40px; background: rgba(255, 255, 255, 0.2); color: white; text-decoration: none; border-radius: 50px; font-size: 1.1em; font-weight: 700; backdrop-filter: blur(10px); border: 2px solid white; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-rocket"></i> Get Involved
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <i class="fas fa-leaf"></i>
+                        <span>THE GREEN CODE</span>
+                    </a>
+                    <p>AI must contribute more than it consumes.</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/ladysaucelyx" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://tiktok.com/@ladysaucelyx" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Framework</h4>
+                        <ul>
+                            <li><a href="framework.html#policy">Policy</a></li>
+                            <li><a href="framework.html#technical">Technical</a></li>
+                            <li><a href="framework.html#charter">Charter</a></li>
+                            <li><a href="framework.html#implementation">Implementation</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="principles.html">Principles</a></li>
+                            <li><a href="partners.html">Partners</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Projects</h4>
+                        <ul>
+                            <li><a href="project-chrysalis.html">Project Chrysalis</a></li>
+                            <li><a href="project-nimbus-widget.html">Project Nimbus</a></li>
+                            <li><a href="sabesp-deployment.html">SABESP Deployment</a></li>
+                            <li><a href="visual-overview.html">Visual Overview</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:yuna@symbioticlxi.org">yuna@symbioticlxi.org</a></li>
+                            <li><a href="get-involved.html#briefing">Request Briefing</a></li>
+                            <li><a href="get-involved.html#signatory">Become a Signatory</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Green Code Initiative. Version 2.0 — Draft for review, adaptation, and institutional consultation.</p>
+                <p class="author-credit">
+                    Authored by <a href="https://instagram.com/ladysaucelyx" target="_blank">YunaAlejandraMoon</a> 
+                    (<a href="https://instagram.com/ladysaucelyx" target="_blank">@ladysaucelyx</a> on Instagram, 
+                    <a href="https://tiktok.com/@ladysaucelyx" target="_blank">@ladysaucelyx</a> on TikTok) — March 2026
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // ZKP Proof Modal Functions
+        const proofs = {
+            proof1: 'A3F9B2C8D1E5F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3',
+            proof2: 'D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9',
+            proof3: 'E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3C5D7E9F2',
+            proof4: 'F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8B1A3C5D7E9F2A4C6D8E1F3A5C7D9E2F4A6C8D1E3F5A7C9D2E4F6A8C1D3E5F7A9C2D4E6F8'
+        };
+        
+        function showProof(proofId) {
+            const modal = document.getElementById('proofModal');
+            const proofHex = document.getElementById('proofHex');
+            proofHex.textContent = proofs[proofId];
+            modal.classList.add('active');
+        }
+        
+        function closeProof() {
+            const modal = document.getElementById('proofModal');
+            modal.classList.remove('active');
+        }
+        
+        // Close modal on outside click
+        document.getElementById('proofModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProof();
+            }
+        });
+        
+        // Animate reclamation counter
+        function animateCounter() {
+            const counter = document.getElementById('reclamationCounter');
+            let currentValue = 63782904306;
+            
+            setInterval(() => {
+                currentValue -= Math.floor(Math.random() * 10000) + 5000; // Random decrease
+                counter.textContent = currentValue.toLocaleString();
+            }, 3000);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            animateCounter();
+        });
+    </script>
+</body>
+</html>

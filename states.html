@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign States Deployment - The Green Code</title>
+    <meta name="description" content="State-scale deployment simulations: California, Texas, Florida, and Oklahoma. From proof-of-concept to proof-of-scale.">
+    <meta name="author" content="YunaAlejandraMoon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .states-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 100px 20px 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .states-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(16,185,129,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .states-hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .scale-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10b981;
+            border-radius: 20px;
+            color: #10b981;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            animation: badgePulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+                border-color: #10b981;
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+                border-color: #34d399;
+            }
+        }
+        
+        .states-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: titleGlow 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.4));
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% {
+                background-position: 0% center;
+                filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.4)) brightness(1);
+            }
+            50% {
+                background-position: 100% center;
+                filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.8)) brightness(1.2);
+            }
+        }
+        
+        .states-subtitle {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #94a3b8;
+            margin: 0 0 30px 0;
+        }
+        
+        .map-container {
+            max-width: 1400px;
+            margin: -60px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .map-card {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .us-map {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .us-map svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        .state-marker {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .state-marker circle {
+            fill: #10b981;
+            transition: all 0.3s ease;
+            animation: markerPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes markerPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.6));
+            }
+            50% {
+                filter: drop-shadow(0 0 15px rgba(16, 185, 129, 1));
+            }
+        }
+        
+        .state-marker:hover circle {
+            fill: #059669;
+            r: 14;
+            filter: drop-shadow(0 0 20px rgba(16, 185, 129, 1)) drop-shadow(0 0 30px rgba(52, 211, 153, 0.8));
+        }
+        
+        .state-marker text {
+            fill: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+        
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .state-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .state-card:hover {
+            border-color: #10b981;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+        }
+        
+        .state-card.active {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+        
+        .state-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .state-icon {
+            font-size: 2.5em;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0px);
+                filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.3));
+            }
+            50% {
+                transform: translateY(-10px);
+                filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+            }
+        }
+        
+        .state-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #059669;
+            margin: 0;
+            text-shadow: 0 0 15px rgba(5, 150, 105, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .state-card:hover .state-name {
+            color: #10b981;
+            text-shadow: 0 0 25px rgba(16, 185, 129, 0.6), 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+        
+        .state-roi {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #10b981;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            animation: roiPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes roiPulse {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(16, 185, 129, 0.4);
+            }
+        }
+            font-weight: 700;
+            color: #10b981;
+            margin: 10px 0;
+        }
+        
+        .state-roi-label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+        
+        .state-highlight {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .state-highlight strong {
+            color: #059669;
+        }
+        
+        .state-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #10b981;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .download-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.7), 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+        
+        .tech-log-section {
+            background: #0f172a;
+            color: white;
+            padding: 80px 20px;
+            margin-top: 80px;
+        }
+        
+        .tech-log-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .tech-log-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(16, 185, 129, 0.5);
+        }
+        
+        @keyframes techGlow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(16, 185, 129, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(16, 185, 129, 1), 0 0 70px rgba(16, 185, 129, 0.7), 0 0 100px rgba(52, 211, 153, 0.4);
+                transform: scale(1.02);
+            }
+        }
+        
+        .frequency-comparison {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+        }
+        
+        .wave-visual {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 30px 0;
+        }
+        
+        .wave-card {
+            text-align: center;
+        }
+        
+        .wave-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px currentColor;
+        }
+        
+        .wave-old {
+            color: #ef4444;
+            animation: oldWaveBlink 2s ease-in-out infinite;
+        }
+        
+        @keyframes oldWaveBlink {
+            0%, 100% {
+                text-shadow: 0 0 20px #ef4444;
+                opacity: 1;
+            }
+            50% {
+                text-shadow: 0 0 30px #ef4444, 0 0 50px #f87171;
+                opacity: 0.8;
+            }
+        }
+        
+        .wave-new {
+            color: #10b981;
+            animation: newWaveGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes newWaveGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px #10b981;
+            }
+            50% {
+                text-shadow: 0 0 30px #10b981, 0 0 50px #34d399, 0 0 70px #10b981;
+            }
+        }
+        
+        .wave-svg {
+            width: 100%;
+            height: 150px;
+            margin: 20px 0;
+        }
+        
+        .wave-specs {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .wave-specs li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .states-title {
+                font-size: 2.5em;
+            }
+            
+            .state-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wave-visual {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Navigation Animations */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .logo {
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+            color: #10b981 !important;
+        }
+        
+        .logo i {
+            animation: logoSpin 3s ease-in-out infinite;
+        }
+        
+        @keyframes logoSpin {
+            0%, 100% {
+                transform: rotate(0deg);
+                filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.3));
+            }
+            50% {
+                transform: rotate(5deg);
+                filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
+            }
+        }
+        
+        .nav-menu li a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu li a:hover::after,
+        .nav-menu li a.active::after {
+            width: 100%;
+        }
+        
+        .nav-menu li a:hover {
+            color: #10b981 !important;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+        
+        .nav-menu li a.active {
+            color: #10b981 !important;
+            font-weight: 600;
+        }
+        
+        .btn-primary.btn-small {
+            animation: btnGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes btnGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), 0 0 30px rgba(16, 185, 129, 0.3);
+            }
+        }
+        
+        /* US Map States Styling */
+        .us-state {
+            fill: #e5e7eb;
+            stroke: #9ca3af;
+            stroke-width: 1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .us-state:hover {
+            fill: #d1d5db;
+        }
+        
+        .us-state.highlighted {
+            fill: #d1fae5;
+            stroke: #10b981;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));
+        }
+        
+        .us-state.highlighted:hover {
+            fill: #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>THE GREEN CODE</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="principles.html">Principles</a></li>
+                <li><a href="framework.html">Framework</a></li>
+                <li><a href="implementation.html">Implementation</a></li>
+                <li><a href="project-chrysalis.html">Project Chrysalis</a></li>
+                <li><a href="visual-overview.html">Visual Overview</a></li>
+                <li><a href="all-phases.html">All Phases</a></li>
+                <li><a href="silicon-council.html">Silicon Council</a></li>
+                <li><a href="operational-ledger.html">Operational Ledger</a></li>
+                <li><a href="municipal-pilot.html">Municipal Pilot</a></li>
+                <li><a href="partners.html">Partners</a></li>
+                <li><a href="states.html" class="active">States</a></li>
+            </ul>
+            <a href="get-involved.html" class="btn btn-primary btn-small">Get Involved</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="states-hero">
+        <div class="states-hero-content">
+            <div class="scale-badge">Proof of Scale</div>
+            <h1 class="states-title">Sovereign States Deployment</h1>
+            <p class="states-subtitle">
+                From pilot nodes to the continental shelf. <strong>9 verified symbiotic sectors</strong> demonstrating<br>
+                the transition from <strong>proof-of-concept</strong> to <strong>proof-of-scale</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="map-container">
+        <div class="map-card">
+            <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2em; text-align: center; margin-bottom: 10px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));">
+                Verified Symbiotic Sectors
+            </h2>
+            <p style="text-align: center; color: #6b7280; font-size: 1.1em; margin-bottom: 40px;">
+                Click a state to view deployment simulation and ROI metrics
+            </p>
+            
+            <!-- US Map SVG (Interactive with state shapes) -->
+            <div class="us-map">
+                <svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" style="background: #f9fafb; border-radius: 15px;">
+                    <!-- Background -->
+                    <rect width="960" height="600" fill="#f9fafb"/>
+                    
+                    <!-- California -->
+                    <path id="california" class="us-state highlighted" onclick="showState('california')" 
+                          d="M 120 180 L 110 210 L 100 240 L 95 280 L 90 320 L 85 360 L 100 370 L 120 360 L 140 340 L 160 310 L 170 280 L 180 250 L 170 220 L 150 200 L 130 185 Z"/>
+                    <text x="125" y="280" font-family="Space Grotesk" font-size="20" font-weight="700" fill="#059669" text-anchor="middle">CA</text>
+                    
+                    <!-- Texas -->
+                    <path id="texas" class="us-state highlighted" onclick="showState('texas')"
+                          d="M 400 320 L 380 350 L 370 380 L 380 420 L 400 450 L 440 460 L 480 460 L 520 450 L 540 430 L 540 400 L 530 370 L 510 350 L 490 340 L 470 330 L 450 325 Z"/>
+                    <text x="450" y="400" font-family="Space Grotesk" font-size="24" font-weight="700" fill="#059669" text-anchor="middle">TX</text>
+                    
+                    <!-- Oklahoma -->
+                    <path id="oklahoma" class="us-state highlighted" onclick="showState('oklahoma')"
+                          d="M 400 300 L 540 300 L 540 350 L 400 350 Z"/>
+                    <text x="470" y="330" font-family="Space Grotesk" font-size="20" font-weight="700" fill="#059669" text-anchor="middle">OK</text>
+                    
+                    <!-- Florida -->
+                    <path id="florida" class="us-state highlighted" onclick="showState('florida')"
+                          d="M 750 380 L 770 400 L 790 420 L 810 450 L 820 480 L 830 500 L 840 510 L 850 500 L 860 480 L 865 460 L 860 440 L 850 420 L 830 400 L 810 390 L 790 385 L 770 382 Z"/>
+                    <text x="815" y="445" font-family="Space Grotesk" font-size="20" font-weight="700" fill="#059669" text-anchor="middle">FL</text>
+                    
+                    <!-- Other States (simplified outlines, non-clickable) -->
+                    <!-- Washington -->
+                    <path class="us-state" d="M 100 80 L 180 80 L 180 130 L 100 130 Z"/>
+                    <!-- Oregon -->
+                    <path class="us-state" d="M 100 130 L 180 130 L 180 180 L 100 180 Z"/>
+                    <!-- Nevada -->
+                    <path id="nevada" class="us-state highlighted" onclick="showState('nevada')" d="M 120 180 L 180 180 L 170 250 L 110 240 Z"/>
+                    <text x="145" y="220" font-family="Space Grotesk" font-size="18" font-weight="700" fill="#059669" text-anchor="middle">NV</text>
+                    <!-- Arizona -->
+                    <path class="us-state" d="M 150 320 L 230 320 L 230 410 L 150 410 Z"/>
+                    <!-- New Mexico -->
+                    <path class="us-state" d="M 230 320 L 310 320 L 310 450 L 230 450 Z"/>
+                    <!-- Montana -->
+                    <path class="us-state" d="M 180 80 L 340 80 L 340 160 L 180 160 Z"/>
+                    <!-- Wyoming -->
+                    <path class="us-state" d="M 220 160 L 360 160 L 360 240 L 220 240 Z"/>
+                    <!-- Colorado -->
+                    <path id="colorado" class="us-state highlighted" onclick="showState('colorado')" d="M 260 240 L 400 240 L 400 330 L 260 330 Z"/>
+                    <text x="330" y="285" font-family="Space Grotesk" font-size="18" font-weight="700" fill="#059669" text-anchor="middle">CO</text>
+                    <!-- Kansas -->
+                    <path class="us-state" d="M 400 280 L 540 280 L 540 330 L 400 330 Z"/>
+                    <!-- Nebraska -->
+                    <path class="us-state" d="M 380 220 L 540 220 L 540 280 L 380 280 Z"/>
+                    <!-- South Dakota -->
+                    <path class="us-state" d="M 380 160 L 540 160 L 540 220 L 380 220 Z"/>
+                    <!-- North Dakota -->
+                    <path class="us-state" d="M 380 100 L 540 100 L 540 160 L 380 160 Z"/>
+                    <!-- Minnesota -->
+                    <path class="us-state" d="M 540 100 L 620 100 L 620 220 L 540 220 Z"/>
+                    <!-- Iowa -->
+                    <path class="us-state" d="M 540 220 L 640 220 L 640 280 L 540 280 Z"/>
+                    <!-- Missouri -->
+                    <path class="us-state" d="M 540 280 L 640 280 L 640 360 L 540 360 Z"/>
+                    <!-- Arkansas -->
+                    <path class="us-state" d="M 510 350 L 590 350 L 590 420 L 510 420 Z"/>
+                    <!-- Louisiana -->
+                    <path class="us-state" d="M 510 420 L 620 420 L 620 480 L 510 480 Z"/>
+                    <!-- Mississippi -->
+                    <path class="us-state" d="M 590 360 L 650 360 L 650 480 L 590 480 Z"/>
+                    <!-- Alabama -->
+                    <path class="us-state" d="M 650 360 L 710 360 L 710 480 L 650 480 Z"/>
+                    <!-- Georgia -->
+                    <path class="us-state" d="M 710 350 L 780 350 L 780 480 L 710 480 Z"/>
+                    <!-- South Carolina -->
+                    <path class="us-state" d="M 780 340 L 850 340 L 850 380 L 780 380 Z"/>
+                    <!-- North Carolina -->
+                    <path class="us-state" d="M 760 300 L 860 300 L 860 350 L 760 350 Z"/>
+                    <!-- Virginia -->
+                    <path id="virginia" class="us-state highlighted" onclick="showState('virginia')" d="M 760 260 L 870 260 L 870 310 L 760 310 Z"/>
+                    <text x="815" y="285" font-family="Space Grotesk" font-size="18" font-weight="700" fill="#059669" text-anchor="middle">VA</text>
+                    <!-- Tennessee -->
+                    <path class="us-state" d="M 650 320 L 770 320 L 770 370 L 650 370 Z"/>
+                    <!-- Kentucky -->
+                    <path class="us-state" d="M 650 290 L 770 290 L 770 330 L 650 330 Z"/>
+                    <!-- Illinois -->
+                    <path id="illinois" class="us-state highlighted" onclick="showState('illinois')" d="M 620 220 L 680 220 L 680 360 L 620 360 Z"/>
+                    <text x="650" y="290" font-family="Space Grotesk" font-size="18" font-weight="700" fill="#059669" text-anchor="middle">IL</text>
+                    <!-- Indiana -->
+                    <path class="us-state" d="M 680 240 L 730 240 L 730 350 L 680 350 Z"/>
+                    <!-- Ohio -->
+                    <path class="us-state" d="M 730 230 L 790 230 L 790 340 L 730 340 Z"/>
+                    <!-- Michigan -->
+                    <path class="us-state" d="M 700 140 L 760 140 L 760 250 L 700 250 Z"/>
+                    <!-- Wisconsin -->
+                    <path class="us-state" d="M 640 140 L 700 140 L 700 240 L 640 240 Z"/>
+                    <!-- Pennsylvania -->
+                    <path class="us-state" d="M 790 210 L 870 210 L 870 270 L 790 270 Z"/>
+                    <!-- New York -->
+                    <path id="newyork" class="us-state highlighted" onclick="showState('newyork')" d="M 800 150 L 890 150 L 890 220 L 800 220 Z"/>
+                    <text x="845" y="185" font-family="Space Grotesk" font-size="18" font-weight="700" fill="#059669" text-anchor="middle">NY</text>
+                    <!-- West Virginia -->
+                    <path class="us-state" d="M 770 270 L 820 270 L 820 310 L 770 310 Z"/>
+                    
+                    <!-- Connection Lines showing network -->
+                    <line x1="125" y1="280" x2="450" y2="400" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+                    <line x1="450" y1="400" x2="470" y2="330" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+                    <line x1="470" y1="330" x2="815" y2="445" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+                    
+                    <!-- State Markers (pulsing dots) -->
+                    <g class="state-marker" data-state="california">
+                        <circle cx="125" cy="280" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="125" cy="280" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="texas">
+                        <circle cx="450" cy="400" r="12" fill="#10b981" opacity="0.8"/>
+                        <circle cx="450" cy="400" r="12" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="12" to="24" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="oklahoma">
+                        <circle cx="470" cy="325" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="470" cy="325" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="florida">
+                        <circle cx="815" cy="445" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="815" cy="445" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="illinois">
+                        <circle cx="650" cy="290" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="650" cy="290" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="newyork">
+                        <circle cx="845" cy="185" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="845" cy="185" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="nevada">
+                        <circle cx="145" cy="220" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="145" cy="220" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="virginia">
+                        <circle cx="815" cy="285" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="815" cy="285" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <g class="state-marker" data-state="colorado">
+                        <circle cx="330" cy="285" r="10" fill="#10b981" opacity="0.8"/>
+                        <circle cx="330" cy="285" r="10" fill="none" stroke="#10b981" stroke-width="2">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                </svg>
+            </div>
+            
+            <!-- State Cards Grid -->
+            <div class="state-grid">
+                <!-- Oklahoma -->
+                <div class="state-card" id="card-oklahoma" onclick="showState('oklahoma')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🛡</div>
+                            <h3 class="state-name">Oklahoma</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">147:1</div>
+                    <div class="state-roi-label">Energy ROI</div>
+                    <div class="state-highlight">
+                        <strong>First Statewide Pilot</strong><br>
+                        The blueprint for state-scale deployment. Rural water security and aquifer preservation.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">3.9M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">77</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="Oklahoma-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- Texas -->
+                <div class="state-card" id="card-texas" onclick="showState('texas')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🌵</div>
+                            <h3 class="state-name">Texas</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">46.7M</div>
+                    <div class="state-roi-label">Acre-Feet Protected</div>
+                    <div class="state-highlight">
+                        <strong>Ogallala Aquifer Preservation</strong><br>
+                        Long-term security play. Protecting the nation's largest groundwater source.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">30M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">254</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="Texas-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- California -->
+                <div class="state-card" id="card-california" onclick="showState('california')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🌿</div>
+                            <h3 class="state-name">California</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">913:1</div>
+                    <div class="state-roi-label">Energy ROI</div>
+                    <div class="state-highlight">
+                        <strong>Seismic Hardening Logic</strong><br>
+                        Predicting pipe failures 30 days before they occur in earthquake-prone infrastructure.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">39.2M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">58</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="California-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- Florida -->
+                <div class="state-card" id="card-florida" onclick="showState('florida')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🌴</div>
+                            <h3 class="state-name">Florida</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">260:1</div>
+                    <div class="state-roi-label">Energy ROI</div>
+                    <div class="state-highlight">
+                        <strong>Sinkhole Detection</strong><br>
+                        140 Hz frequency senses earth shifting before surface breaks. Karst terrain monitoring.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">22M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">67</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="Florida-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- Illinois -->
+                <div class="state-card" id="card-illinois" onclick="showState('illinois')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🌽</div>
+                            <h3 class="state-name">Illinois</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">12.6M</div>
+                    <div class="state-roi-label">Population Served</div>
+                    <div class="state-highlight">
+                        <strong>Chicago Metro & Lake Michigan</strong><br>
+                        Great Lakes water security with aging infrastructure (60-100+ years). Critical urban density protection.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">12.6M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">102</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="Illinois-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- New York -->
+                <div class="state-card" id="card-newyork" onclick="showState('newyork')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🗽</div>
+                            <h3 class="state-name">New York</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">19.5M</div>
+                    <div class="state-roi-label">Population Served</div>
+                    <div class="state-highlight">
+                        <strong>Catskill Aquifer & Ancient Pipes</strong><br>
+                        NYC infrastructure 60-150+ years old. Catskill/Delaware water system with historic leak challenges.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">19.5M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">62</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="New-York-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- Nevada -->
+                <div class="state-card" id="card-nevada" onclick="showState('nevada')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🎰</div>
+                            <h3 class="state-name">Nevada</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">3.1M</div>
+                    <div class="state-roi-label">Population Served</div>
+                    <div class="state-highlight">
+                        <strong>Driest State & Lake Mead Crisis</strong><br>
+                        4-10 inches annual rain. Colorado River (Lake Mead) dependency. Critical water scarcity management.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">3.1M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">17</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="Nevada-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- Virginia -->
+                <div class="state-card" id="card-virginia" onclick="showState('virginia')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🌊</div>
+                            <h3 class="state-name">Virginia</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">8.7M</div>
+                    <div class="state-roi-label">Population Served</div>
+                    <div class="state-highlight">
+                        <strong>Chesapeake Bay & DC Metro</strong><br>
+                        James River, Potomac River systems. 60-90 year old infrastructure. Critical coastal & capital region protection.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">8.7M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">95+38</div>
+                            <div class="stat-label">Counties + Cities</div>
+                        </div>
+                    </div>
+                    <a href="Virginia-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+
+                <!-- Colorado -->
+                <div class="state-card" id="card-colorado" onclick="showState('colorado')">
+                    <div class="state-header">
+                        <div>
+                            <div class="state-icon">🌄</div>
+                            <h3 class="state-name">Colorado</h3>
+                        </div>
+                    </div>
+                    <div class="state-roi">5.8M</div>
+                    <div class="state-roi-label">Population Served</div>
+                    <div class="state-highlight">
+                        <strong>Colorado River Headwaters & Snowpack</strong><br>
+                        80% water from snowpack. Source of Colorado River. Semi-arid climate with alpine snowmelt dependency.
+                    </div>
+                    <div class="state-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">5.8M</div>
+                            <div class="stat-label">Population</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">64</div>
+                            <div class="stat-label">Counties</div>
+                        </div>
+                    </div>
+                    <a href="Colorado-Simulation.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Simulation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Log Section -->
+    <section class="tech-log-section">
+        <div class="container">
+            <div class="tech-log-header">
+                <h2 class="tech-log-title" style="animation: techGlow 2.5s ease-in-out infinite;">⚡ Technical Log: Firmware Update</h2>
+                <p style="color: #94a3b8; font-size: 1.2em;">The Green Code is a living, evolving organism</p>
+            </div>
+
+            <div class="frequency-comparison">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8em; margin-bottom: 10px; background: linear-gradient(90deg, #10b981, #34d399, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-size: 200% auto; animation: gradientShift 3s ease infinite; font-weight: 700; text-shadow: 0 0 25px rgba(16, 185, 129, 0.6);">
+                        Detection Band Upgraded
+                    </h3>
+                    <style>
+                        @keyframes gradientShift {
+                            0%, 100% { background-position: 0% center; }
+                            50% { background-position: 100% center; }
+                        }
+                    </style>
+                    <p style="color: #94a3b8; font-size: 1.1em;">
+                        From ultrasonic to low-frequency acoustic detection
+                    </p>
+                </div>
+
+                <div class="wave-visual">
+                    <!-- Old Frequency -->
+                    <div class="wave-card">
+                        <div class="wave-label wave-old">
+                            <i class="fas fa-times-circle"></i> Previous: 40-44 kHz
+                        </div>
+                        <svg class="wave-svg">
+                            <path d="M 10,75 Q 20,25 30,75 T 50,75 T 70,75 T 90,75 T 110,75 T 130,75 T 150,75 T 170,75 T 190,75 T 210,75 T 230,75 T 250,75 T 270,75 T 290,75 T 310,75 T 330,75 T 350,75 T 370,75 T 390,75 T 410,75 T 430,75 T 450,75" 
+                                  stroke="#ef4444" 
+                                  stroke-width="2" 
+                                  fill="none"/>
+                        </svg>
+                        <div class="wave-specs">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li>❌ Limited soil penetration</li>
+                                <li>❌ High urban noise interference</li>
+                                <li>❌ 15-20 meter detection radius</li>
+                                <li>❌ 1.1% false positive rate</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- New Frequency -->
+                    <div class="wave-card">
+                        <div class="wave-label wave-new">
+                            <i class="fas fa-check-circle"></i> Updated: 140 Hz
+                        </div>
+                        <svg class="wave-svg">
+                            <path d="M 10,75 Q 90,25 170,75 T 330,75 T 490,75" 
+                                  stroke="#10b981" 
+                                  stroke-width="3" 
+                                  fill="none"/>
+                        </svg>
+                        <div class="wave-specs">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li>✅ 3-5× better soil penetration</li>
+                                <li>✅ Cuts through urban noise</li>
+                                <li>✅ 30-40 meter detection radius (2×)</li>
+                                <li>✅ <0.8% false positive rate</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <p style="font-size: 1.1em; line-height: 1.8; color: #cbd5e1; margin-bottom: 25px;">
+                        <strong style="color: #10b981;">Why the change?</strong> Lower frequency equals better propagation through soil.
+                        It penetrates clay, doubles the detection radius of every node, and significantly reduces false positives.
+                    </p>
+                    <a href="140Hz-Frequency-Update.pdf" download style="display: inline-flex; align-items: center; gap: 10px; background: #10b981; color: white; padding: 15px 35px; border-radius: 10px; text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.1em; transition: all 0.3s ease;">
+                        <i class="fas fa-file-pdf"></i> Download Full Technical Update
+                    </a>
+                    <br>
+                    <a href="Sector-2-Efficiency-Architects.pdf" download style="display: inline-flex; align-items: center; gap: 10px; background: rgba(59, 130, 246, 0.2); color: #60a5fa; padding: 12px 28px; border-radius: 10px; text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin-top: 15px; border: 2px solid #60a5fa; transition: all 0.3s ease;">
+                        <i class="fas fa-download"></i> Sector 2: Efficiency Architects Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; text-shadow: 0 0 20px rgba(16, 185, 129, 0.5); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));">Ready to Deploy in Your State?</h2>
+                <p>Join Oklahoma, Texas, California, and Florida in building the symbiotic infrastructure of the future.</p>
+                <div class="cta-buttons">
+                    <a href="get-involved.html" class="btn btn-primary btn-large">Apply for State Deployment</a>
+                    <a href="municipal-pilot.html" class="btn btn-secondary btn-large">View Municipal Pilots</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <i class="fas fa-leaf"></i>
+                        <span>THE GREEN CODE</span>
+                    </a>
+                    <p>AI must contribute more than it consumes.</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/ladysaucelyx" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://tiktok.com/@ladysaucelyx" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://x.com/ladysaucelyx" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Framework</h4>
+                    <ul>
+                        <li><a href="framework.html#policy">Policy</a></li>
+                        <li><a href="framework.html#technical">Technical</a></li>
+                        <li><a href="framework.html#charter">Charter</a></li>
+                        <li><a href="implementation.html">Implementation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="principles.html">Principles</a></li>
+                        <li><a href="silicon-council.html">Silicon Council</a></li>
+                        <li><a href="municipal-pilot.html">Municipal Pilot</a></li>
+                        <li><a href="states.html">State Deployments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:yuna@symbioticlxi.org">yuna@symbioticlxi.org</a></li>
+                        <li><a href="get-involved.html">Get Involved</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Green Code Initiative. Version 2.0 — Phase 2 LIVE. Authorization: YUNA-ANCHOR-001</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Show state function with enhanced highlighting
+        function showState(stateName) {
+            // Remove active class from all cards
+            document.querySelectorAll('.state-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Remove highlighted class from all states on map
+            document.querySelectorAll('.us-state').forEach(state => {
+                state.classList.remove('highlighted');
+            });
+            
+            // Add active class to clicked card
+            const targetCard = document.getElementById('card-' + stateName);
+            if (targetCard) {
+                targetCard.classList.add('active');
+            }
+            
+            // Highlight the state on the map
+            const targetState = document.getElementById(stateName);
+            if (targetState) {
+                targetState.classList.add('highlighted');
+            }
+            
+            // Scroll to state card on mobile
+            if (window.innerWidth < 768 && targetCard) {
+                targetCard.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
+        }
+        
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuToggle && navMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    mobileMenuToggle.classList.toggle('active');
+                });
+            }
+            
+            // Highlight all 9 verified states on load
+            const verifiedStates = ['california', 'texas', 'oklahoma', 'florida', 'illinois', 'newyork', 'nevada', 'virginia', 'colorado'];
+            verifiedStates.forEach(stateName => {
+                const stateElement = document.getElementById(stateName);
+                if (stateElement) {
+                    stateElement.classList.add('highlighted');
+                }
+            });
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
